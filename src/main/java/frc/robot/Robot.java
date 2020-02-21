@@ -7,10 +7,9 @@
 
 package frc.robot;
 
-import java.util.ArrayList;
-
 import edu.wpi.first.wpilibj.TimedRobot;
-import framework.interfaces.IMechanism;
+import framework.robot.interfaces.IRobot;
+import robot.Robot2020Config;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -19,71 +18,54 @@ import framework.interfaces.IMechanism;
  * creating this project, you must also update the build.gradle file in the
  * project.
  */
-public class Robot extends TimedRobot implements IMechanism {
-  protected ArrayList<IMechanism> children;
+public class Robot extends TimedRobot {
+  private IRobot robot;
+  private Robot2020Config config;
 
   @Override
   public void robotInit() {
-
+    config = new Robot2020Config();
+    robot = config.build(null);
+    robot.robotInit();
+  }
+  @Override
+  public void robotPeriodic() {
+    robot.robotPeriodic();
   }
 
   @Override
   public void autonomousInit() {
-
+    robot.autonomousInit();
   }
-
   @Override
   public void autonomousPeriodic() {
-
+    robot.autonomousPeriodic();
   }
 
   @Override
   public void teleopInit() {
-
+    robot.teleopInit();
   }
-
   @Override
   public void teleopPeriodic() {
-
+    robot.teleopPeriodic();
   }
 
   @Override
   public void testInit() {
-
+    robot.testInit();
   }
-
   @Override
   public void testPeriodic() {
-
+    robot.testPeriodic();
   }
 
   @Override
-  public void robotPeriodic() {
-    log();
+  public void disabledInit() {
+    robot.disabledInit();
   }
-
-  /**
-   * Log relevant information, should be called every iteration of the robot.
-   * Only log information local to this class, and then call log functions of all children mechanisms.
-   */
   @Override
-  public void log() {
-    //TODO: log robot information
-
-    for (IMechanism child : children) {
-      child.log();
-    }
+  public void disabledPeriodic() {
+    robot.disabledPeriodic();
   }
-
-  @Override
-  public IMechanism[] getChildren() {
-    var result = new IMechanism[children.size()];
-    return children.toArray(result);
-  }
-
-  @Override
-  public IMechanism getParent() {
-    return null;
-  }
-
 }
